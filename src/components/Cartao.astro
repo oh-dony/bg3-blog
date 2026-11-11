@@ -13,6 +13,7 @@ const t = TIPOS[d.tipo];
   </div>
   <h3>{d.titulo}</h3>
   {d.classe && <p class="classe">{d.classe}</p>}
+  {d.membros && <p class="classe">{d.membros.map((m) => m.classe.split(' (')[0].replace(/\s*\d+$/, '')).join(' · ')}</p>}
   {d.resumo && <p class="resumo">{d.resumo}</p>}
   {d.tags.length > 0 && <ul class="tags">{d.tags.map((tag) => <li>{tag}</li>)}</ul>}
 </a>

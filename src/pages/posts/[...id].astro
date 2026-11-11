@@ -1,6 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Base from '../../layouts/Base.astro';
+import Icone from '../../components/Icone.astro';
+import Retrato from '../../components/Retrato.astro';
+import Party from '../../components/Party.astro';
 import { TIPOS, url, formatarData } from '../../tipos';
 
 export async function getStaticPaths() {
@@ -34,7 +37,15 @@ const { Content } = await render(post);
       </aside>
     )}
 
-    <div class="conteudo"><Content /></div>
+    {d.membros && d.membros.length > 0 && (
+      <section class="formacao">
+        <h2 class="secao">A formação</h2>
+        <Party membros={d.membros} />
+      </section>
+    )}
+
+    <!-- Em posts .mdx, <Icone> e <Retrato> funcionam sem precisar de import -->
+    <div class="conteudo"><Content components={{ Icone, Retrato }} /></div>
     {d.tags.length > 0 && <ul class="tags">{d.tags.map((tag) => <li>{tag}</li>)}</ul>}
   </article>
 </Base>

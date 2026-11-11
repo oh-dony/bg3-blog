@@ -1,0 +1,37 @@
+---
+/**
+ * Ícone do jogo com o nome ao lado, para usar dentro de posts .mdx:
+ *   <Icone magia="bola-de-fogo" />
+ *   <Icone talento="mestre-em-armas-grandes" nome="Mestre em Armas Grandes" />
+ *   <Icone item="elixir-da-forca-do-gigante-da-colina" dica="Força vira 21" />
+ *   <Icone condicao="molhado" so />          (só o ícone, sem o nome)
+ * A imagem vem de public/icones/<magias|talentos|itens|classes|condicoes>/<slug>.webp|png
+ */
+import { acharImagem } from '../lib/imagens';
+import { nomeDoSlug, iniciais } from '../tipos';
+
+interface Props {
+  magia?: string; talento?: string; item?: string; classe?: string; condicao?: string;
+  nome?: string;   // padrão: gerado a partir do slug
+  dica?: string;   // texto do balão ao passar o mouse
+  so?: boolean;    // mostra só o ícone
+}
+const p = Astro.props;
+const [pasta, slug, rotulo] =
+  p.magia ? ['magias', p.magia, 'Magia'] :
+  p.talento ? ['talentos', p.talento, 'Talento'] :
+  p.item ? ['itens', p.item, 'Item'] :
+  p.classe ? ['classes', p.classe, 'Classe'] :
+  p.condicao ? ['condicoes', p.condicao, 'Condição'] :
+  [undefined, undefined, undefined];
+if (!pasta || !slug) throw new Error('<Icone> precisa de magia, talento, item, classe ou condicao.');
+
+const nome = p.nome ?? nomeDoSlug(slug);
+const src = acharImagem(`icones/${pasta}`, slug);
+---
+<span class={`icone icone-${pasta}${p.so ? ' so' : ''}`} tabindex={p.dica ? 0 : undefined}>{src
+  ? <img src={src} alt={p.so ? nome : ''} width="28" height="28" loading="lazy" decoding="async" />
+  : <span class="icone-falta" aria-hidden="true" title={`Falta public/icones/${pasta}/${slug}.webp`}><small>{iniciais(nome)}</small></span>
+}{p.so ? <span class="sr">{nome}</span> : <span class="icone-nome">{nome}</span>}{p.dica && (
+  <span class="icone-dica" role="tooltip"><strong>{nome}</strong><em>{rotulo}</em>{p.dica}</span>
+)}</span>

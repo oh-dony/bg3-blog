@@ -1,0 +1,19 @@
+---
+/**
+ * Retrato redondo de NPC/companheiro. Imagem em public/retratos/<slug>.webp|png|jpg
+ *   <Retrato npc="shadowheart" nome="Shadowheart" />
+ * Sem imagem, mostra as iniciais do nome.
+ */
+import { acharImagem } from '../lib/imagens';
+import { nomeDoSlug, iniciais } from '../tipos';
+
+interface Props { npc?: string; nome?: string; tamanho?: number }
+const { npc, tamanho = 72 } = Astro.props;
+const nome = Astro.props.nome ?? (npc ? nomeDoSlug(npc) : '?');
+const src = npc ? acharImagem('retratos', npc) : undefined;
+---
+<span class="retrato" style={`--tam:${tamanho}px`}>
+  {src
+    ? <img src={src} alt={nome} width={tamanho} height={tamanho} loading="lazy" decoding="async" />
+    : <span class="retrato-falta" aria-hidden="true">{iniciais(nome)}</span>}
+</span>

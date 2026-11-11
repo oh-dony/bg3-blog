@@ -10,6 +10,7 @@
   --combo: #6a4aa0;
   --talento: #2f6f5e;
   --dica: #3b5d8f;
+  --party: #b0562a;
   color-scheme: light;
 }
 @media (prefers-color-scheme: dark) {
@@ -25,13 +26,14 @@
     --combo: #b394ea;
     --talento: #6cc3a6;
     --dica: #86aee6;
+    --party: #eb9466;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --fundo: #14111a; --fundo-2: #1c1823; --cartao: #1f1a27; --texto: #ece3d3;
   --texto-suave: #a89c8c; --borda: #3a3244; --ouro: #d4a857; --build: #e0705f;
-  --combo: #b394ea; --talento: #6cc3a6; --dica: #86aee6; color-scheme: dark;
+  --combo: #b394ea; --talento: #6cc3a6; --dica: #86aee6; --party: #eb9466; color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
@@ -56,6 +58,7 @@ code { font-size: .9em; background: var(--fundo-2); padding: .1em .35em; border-
 .tipo-combo   { --cor: var(--combo); }
 .tipo-talento { --cor: var(--talento); }
 .tipo-dica    { --cor: var(--dica); }
+.tipo-party   { --cor: var(--party); }
 
 /* Topo */
 .topo {
@@ -133,3 +136,46 @@ nav a:hover, nav a.ativo { color: var(--texto); border-color: var(--ouro); }
 .conteudo img { max-width: 100%; border-radius: 8px; }
 
 .rodape { text-align: center; color: var(--texto-suave); font-size: .95rem; padding: 2rem 16px; border-top: 1px solid var(--borda); }
+.rodape p { margin: 0 auto .4rem; max-width: 60ch; }
+.rodape .aviso { font-size: .82rem; line-height: 1.5; opacity: .85; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+
+/* Ícones do jogo dentro do texto */
+.icone { position: relative; display: inline; font-weight: 600; white-space: nowrap; }
+.icone img, .icone-falta { display: inline-block; width: 1.3em; height: 1.3em; margin-right: .3em; vertical-align: -0.28em; border-radius: 4px; }
+.icone img { object-fit: cover; box-shadow: 0 0 0 1px var(--borda); }
+.icone-falta {
+  text-align: center; line-height: 1.3em; font-family: 'Cinzel', serif; font-weight: 700; letter-spacing: 0;
+  background: var(--fundo-2); color: var(--texto-suave); border: 1px dashed var(--borda);
+}
+.icone-falta small { font-size: .55em; vertical-align: top; }
+.icone-magias .icone-falta { border-radius: 50%; }
+.icone[tabindex] { cursor: help; }
+.icone[tabindex] .icone-nome { text-decoration: underline dotted var(--texto-suave); text-underline-offset: 3px; }
+.icone-dica {
+  position: absolute; z-index: 10; left: 0; bottom: calc(100% + 8px); width: max-content; max-width: min(280px, 80vw);
+  padding: 10px 12px; background: var(--cartao); color: var(--texto); border: 1px solid var(--borda); border-radius: 8px;
+  box-shadow: 0 6px 24px rgb(0 0 0 / .18); font-weight: 400; font-size: .95rem; line-height: 1.4; white-space: normal;
+  opacity: 0; visibility: hidden; transform: translateY(4px); transition: opacity .12s, transform .12s, visibility .12s;
+}
+.icone-dica strong { display: block; font-family: 'Cinzel', serif; font-size: .9rem; }
+.icone-dica em { display: block; font-size: .8rem; color: var(--texto-suave); margin-bottom: 4px; }
+.icone:hover .icone-dica, .icone:focus-visible .icone-dica { opacity: 1; visibility: visible; transform: none; }
+
+/* Retratos */
+.retrato { display: inline-block; width: var(--tam); height: var(--tam); flex: none; border-radius: 50%; overflow: hidden; border: 2px solid var(--cor, var(--ouro)); background: var(--fundo-2); }
+.retrato img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.retrato-falta { width: 100%; height: 100%; display: grid; place-items: center; font-family: 'Cinzel', serif; font-size: calc(var(--tam) * .32); color: var(--cor, var(--ouro)); }
+
+/* Formação da party */
+.formacao { margin: 2rem 0 1rem; }
+.party { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 12px; }
+.membro {
+  position: relative; display: flex; gap: 14px; align-items: flex-start; padding: 16px;
+  background: var(--cartao); border: 1px solid var(--borda); border-radius: 8px;
+}
+.membro h3 { margin: 0; font-size: 1.05rem; line-height: 1.25; }
+.membro p { margin: 0; }
+.membro-classe { color: var(--cor); font-weight: 600; font-size: 1rem; }
+.membro-papel { color: var(--texto-suave); font-size: 1rem; line-height: 1.4; margin-top: 2px !important; }
+.membro-ordem { position: absolute; top: 8px; right: 12px; font-family: 'Cinzel', serif; font-size: .8rem; color: var(--texto-suave); }

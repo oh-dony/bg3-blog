@@ -1,0 +1,20 @@
+---
+/** A formação da party: um cartão por membro, com retrato, classe e papel no combo. */
+import Retrato from './Retrato.astro';
+interface Membro { nome: string; classe: string; papel: string; retrato?: string }
+interface Props { membros: Membro[] }
+const { membros } = Astro.props;
+---
+<ol class="party">
+  {membros.map((m, i) => (
+    <li class="membro">
+      <span class="membro-ordem">{i + 1}</span>
+      <Retrato npc={m.retrato} nome={m.nome} tamanho={64} />
+      <div>
+        <h3>{m.nome}</h3>
+        <p class="membro-classe">{m.classe}</p>
+        <p class="membro-papel">{m.papel}</p>
+      </div>
+    </li>
+  ))}
+</ol>
