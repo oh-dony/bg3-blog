@@ -1,0 +1,25 @@
+import { defineCollection, z } from 'astro:content';
+import { glob } from 'astro/loaders';
+
+const posts = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/posts' }),
+  schema: z.object({
+    titulo: z.string(),
+    tipo: z.enum(['build', 'combo', 'talento', 'dica']),
+    data: z.coerce.date(),
+    resumo: z.string().optional(),
+    classe: z.string().optional(),      // ex.: "Paladino 6 / Feiticeiro 6"
+    raca: z.string().optional(),
+    atributos: z
+      .object({
+        FOR: z.number(), DES: z.number(), CON: z.number(),
+        INT: z.number(), SAB: z.number(), CAR: z.number(),
+      })
+      .optional(),
+    talentos: z.array(z.string()).optional(),
+    tags: z.array(z.string()).default([]),
+    rascunho: z.boolean().default(false),
+  }),
+});
+
+export const collections = { posts };

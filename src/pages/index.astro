@@ -1,0 +1,33 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Cartao from '../components/Cartao.astro';
+import { TIPOS, url } from '../tipos';
+
+const posts = (await getCollection('posts', ({ data }) => !data.rascunho))
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+const contagem = (tipo: string) => posts.filter((p) => p.data.tipo === tipo).length;
+---
+<Base>
+  <section class="abertura">
+    <p class="sobretitulo">Baldur's Gate 3</p>
+    <h1>Grimório</h1>
+    <p class="lede">Builds, combos e talentos que funcionaram (e alguns que não) guardados num lugar só.</p>
+    <div class="atalhos">
+      {Object.entries(TIPOS).map(([chave, t]) => (
+        <a class={`atalho tipo-${chave}`} href={url(`tipo/${chave}/`)}>
+          <span class="atalho-icone">{t.icone}</span>
+          <span>{t.nome}</span>
+          <span class="atalho-num">{contagem(chave)}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section>
+    <h2 class="secao">Mais recentes</h2>
+    {posts.length === 0
+      ? <p class="vazio">Nada por aqui ainda. Rode <code>npm run novo</code> para criar o primeiro.</p>
+      : <div class="grade">{posts.map((post) => <Cartao post={post} />)}</div>}
+  </section>
+</Base>

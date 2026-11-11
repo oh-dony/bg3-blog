@@ -1,0 +1,10 @@
+services:
+  blog:
+    build: .
+    container_name: bg3-blog
+    ports:
+      - "4321:4321"
+    volumes:
+      - ./:/app              # edita o .md no seu PC e o site atualiza na hora
+      - /app/node_modules
+    restart: unless-stopped

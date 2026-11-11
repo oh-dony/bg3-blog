@@ -1,0 +1,18 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { TIPOS, url, formatarData } from '../tipos';
+interface Props { post: CollectionEntry<'posts'> }
+const { post } = Astro.props;
+const d = post.data;
+const t = TIPOS[d.tipo];
+---
+<a class={`cartao tipo-${d.tipo}`} href={url(`posts/${post.id}/`)}>
+  <div class="cartao-meta">
+    <span class="selo-tipo">{t.icone} {t.singular}</span>
+    <time datetime={d.data.toISOString()}>{formatarData(d.data)}</time>
+  </div>
+  <h3>{d.titulo}</h3>
+  {d.classe && <p class="classe">{d.classe}</p>}
+  {d.resumo && <p class="resumo">{d.resumo}</p>}
+  {d.tags.length > 0 && <ul class="tags">{d.tags.map((tag) => <li>{tag}</li>)}</ul>}
+</a>

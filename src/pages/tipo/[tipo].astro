@@ -1,0 +1,23 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Cartao from '../../components/Cartao.astro';
+import { TIPOS, type Tipo } from '../../tipos';
+
+export function getStaticPaths() {
+  return Object.keys(TIPOS).map((tipo) => ({ params: { tipo } }));
+}
+const tipo = Astro.params.tipo as Tipo;
+const t = TIPOS[tipo];
+const posts = (await getCollection('posts', ({ data }) => !data.rascunho && data.tipo === tipo))
+  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+---
+<Base titulo={t.nome}>
+  <section class="abertura menor">
+    <p class="sobretitulo">{t.icone} Categoria</p>
+    <h1>{t.nome}</h1>
+  </section>
+  {posts.length === 0
+    ? <p class="vazio">Nenhum(a) {t.singular.toLowerCase()} ainda. Rode <code>npm run novo -- {tipo} "Nome"</code>.</p>
+    : <div class="grade">{posts.map((post) => <Cartao post={post} />)}</div>}
+</Base>

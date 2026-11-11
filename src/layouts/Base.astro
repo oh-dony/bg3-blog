@@ -1,0 +1,39 @@
+---
+import '../styles/global.css';
+import { TIPOS, url } from '../tipos';
+interface Props { titulo?: string; descricao?: string }
+const { titulo, descricao = "Builds, combos e talentos de Baldur's Gate 3" } = Astro.props;
+const nomeSite = 'Grimório';
+const atual = Astro.url.pathname;
+---
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{titulo ? `${titulo} · ${nomeSite}` : nomeSite}</title>
+    <meta name="description" content={descricao} />
+    <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+  </head>
+  <body>
+    <header class="topo">
+      <a class="marca" href={url()}>
+        <span class="selo">G</span>
+        <span>{nomeSite}</span>
+      </a>
+      <nav>
+        {Object.entries(TIPOS).map(([chave, t]) => {
+          const href = url(`tipo/${chave}/`);
+          return <a href={href} class={atual.startsWith(href) ? 'ativo' : ''}>{t.nome}</a>;
+        })}
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="rodape">
+      Anotações pessoais de Baldur's Gate 3 · site de fã, sem ligação com a Larian Studios
+    </footer>
+  </body>
+</html>

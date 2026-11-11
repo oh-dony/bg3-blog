@@ -1,0 +1,40 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { TIPOS, url, formatarData } from '../../tipos';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.rascunho);
+  return posts.map((post) => ({ params: { id: post.id }, props: { post } }));
+}
+const { post } = Astro.props;
+const d = post.data;
+const t = TIPOS[d.tipo];
+const { Content } = await render(post);
+---
+<Base titulo={d.titulo} descricao={d.resumo}>
+  <article class={`post tipo-${d.tipo}`}>
+    <a class="voltar" href={url(`tipo/${d.tipo}/`)}>← {t.nome}</a>
+    <p class="sobretitulo">{t.icone} {t.singular} · {formatarData(d.data)}</p>
+    <h1>{d.titulo}</h1>
+    {d.resumo && <p class="lede">{d.resumo}</p>}
+
+    {(d.classe || d.raca || d.atributos || d.talentos) && (
+      <aside class="ficha">
+        {d.classe && <div><dt>Classe</dt><dd>{d.classe}</dd></div>}
+        {d.raca && <div><dt>Raça</dt><dd>{d.raca}</dd></div>}
+        {d.talentos && <div><dt>Talentos</dt><dd>{d.talentos.join(' · ')}</dd></div>}
+        {d.atributos && (
+          <ul class="atributos">
+            {Object.entries(d.atributos).map(([k, v]) => (
+              <li><span>{k}</span><strong>{v}</strong></li>
+            ))}
+          </ul>
+        )}
+      </aside>
+    )}
+
+    <div class="conteudo"><Content /></div>
+    {d.tags.length > 0 && <ul class="tags">{d.tags.map((tag) => <li>{tag}</li>)}</ul>}
+  </article>
+</Base>
