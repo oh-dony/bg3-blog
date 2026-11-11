@@ -31,6 +31,7 @@ Repositório no GitHub chamado `bg3-blog` → Settings → Pages → Source: Git
 Cada push na `main` atualiza o site.
 
 ## Rodar com Docker
-    docker compose up -d --build   # --build quando mudar dependência; site em http://localhost:4321/bg3-blog/
+    docker compose up -d      # site em http://localhost:4321/bg3-blog/
     docker compose down       # desliga
-A pasta é montada no container: salvou o .md, a página atualiza sozinha.
+A pasta é montada no container: salvou o arquivo, a página atualiza sozinha.
+Dependência nova (package-lock.json mudou) é instalada sozinha, sem --build.

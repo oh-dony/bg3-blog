@@ -5,6 +5,9 @@ services:
     ports:
       - "4321:4321"
     volumes:
-      - ./:/app              # edita o .md no seu PC e o site atualiza na hora
-      - /app/node_modules
+      - ./:/app                          # edita no seu PC, a página atualiza na hora
+      - node_modules:/app/node_modules   # dependências do container (Linux), instaladas sozinhas
     restart: unless-stopped
+
+volumes:
+  node_modules:
