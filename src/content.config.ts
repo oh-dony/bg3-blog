@@ -1,5 +1,6 @@
 import { defineCollection, z } from 'astro:content';
 import { glob } from 'astro/loaders';
+import { SLUGS_CLASSES } from './classes';
 
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
@@ -9,6 +10,9 @@ const posts = defineCollection({
     data: z.coerce.date(),
     resumo: z.string().optional(),
     classe: z.string().optional(),      // ex.: "Paladino 6 / Feiticeiro 6"
+    // Para quais classes o post serve. Builds e parties já são detectadas pelo
+    // campo `classe` e pelos `membros`; use isto em talentos, combos e dicas.
+    classes: z.array(z.enum(SLUGS_CLASSES)).default([]),
     raca: z.string().optional(),
     atributos: z
       .object({

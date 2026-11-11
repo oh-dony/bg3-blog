@@ -4,6 +4,7 @@ tipo: talento
 data: 2026-11-11
 resumo: "Escolhe um elemento: suas magias dele ignoram resistência e nunca rolam 1 no dano."
 talentos: ["Poder Elemental (Elemental Adept)"]
+classes: [feiticeiro, mago]
 tags: ["conjurador", "fogo", "frio", "elétrico", "vídeo"]
 ---
 

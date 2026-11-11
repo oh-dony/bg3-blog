@@ -1,20 +1,22 @@
 ---
-/** A formação da party: um cartão por membro, com retrato, classe e papel no combo. */
-import Retrato from './Retrato.astro';
+/** A formação: quatro colunas, cada membro com retrato (ou a gravura da classe), classe e papel. */
+import { acharImagem } from '../lib/imagens';
+import { gravura } from '../lib/gravuras';
+import { classesNoTexto } from '../classes';
 interface Membro { nome: string; classe: string; papel: string; retrato?: string }
 interface Props { membros: Membro[] }
 const { membros } = Astro.props;
 ---
-<ol class="party">
-  {membros.map((m, i) => (
-    <li class="membro">
-      <span class="membro-ordem">{i + 1}</span>
-      <Retrato npc={m.retrato} nome={m.nome} tamanho={64} />
-      <div>
+<ol class="party" data-entra>
+  {membros.map((m, i) => {
+    const foto = (m.retrato && acharImagem('retratos', m.retrato)) || gravura(classesNoTexto(m.classe)[0] ?? 'party');
+    return (
+      <li class="membro" style={`--i:${i}`}>
+        <div class:list={['quadro', { retrato: !!(m.retrato && acharImagem('retratos', m.retrato)) }]}><img src={foto} alt="" width="900" height="1150" loading="lazy" decoding="async" /></div>
         <h3>{m.nome}</h3>
         <p class="membro-classe">{m.classe}</p>
         <p class="membro-papel">{m.papel}</p>
-      </div>
-    </li>
-  ))}
+      </li>
+    );
+  })}
 </ol>

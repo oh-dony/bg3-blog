@@ -4,6 +4,7 @@ tipo: talento
 data: 2026-11-11
 resumo: "O pacote do conjurador: agir primeiro, nunca ser surpreendido e não perder a concentração."
 talentos: ["Alerta (Alert)", "Resiliente: Constituição (Resilient)", "Conjurador de Guerra (War Caster)"]
+classes: [clerigo, druida, mago, feiticeiro, bruxo, bardo]
 tags: ["conjurador", "concentração", "iniciativa", "vídeo"]
 ---
 

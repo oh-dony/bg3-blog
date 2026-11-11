@@ -1,9 +1,9 @@
 export const TIPOS = {
-  build:   { nome: 'Builds',   singular: 'Build',   icone: '⚔' },
-  combo:   { nome: 'Combos',   singular: 'Combo',   icone: '✦' },
-  party:   { nome: 'Parties',  singular: 'Party',   icone: '⚑' },
-  talento: { nome: 'Talentos', singular: 'Talento', icone: '❖' },
-  dica:    { nome: 'Dicas',    singular: 'Dica',    icone: '☾' },
+  build:   { nome: 'Builds',   singular: 'Build' },
+  party:   { nome: 'Parties',  singular: 'Party' },
+  combo:   { nome: 'Combos',   singular: 'Combo' },
+  talento: { nome: 'Talentos', singular: 'Talento' },
+  dica:    { nome: 'Dicas',    singular: 'Dica' },
 } as const;
 
 export type Tipo = keyof typeof TIPOS;

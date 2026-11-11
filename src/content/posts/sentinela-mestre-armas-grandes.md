@@ -4,6 +4,7 @@ tipo: talento
 data: 2026-11-11
 resumo: "Tanque que pune quem ataca os aliados e bate forte com arma de duas mãos."
 talentos: ["Sentinela (Sentinel)", "Mestre em Armas Grandes (Great Weapon Master)"]
+classes: [guerreiro, paladino, barbaro]
 tags: ["corpo a corpo", "tanque", "reação", "vídeo"]
 ---
 

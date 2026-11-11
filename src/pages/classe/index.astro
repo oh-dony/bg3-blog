@@ -1,0 +1,13 @@
+---
+import Base from '../../layouts/Base.astro';
+import TabelaClasses from '../../components/TabelaClasses.astro';
+import { postsPublicados, contarPorClasse } from '../../lib/posts';
+const posts = await postsPublicados();
+---
+<Base titulo="Classes" descricao="Tudo do Grimório separado pelas doze classes de Baldur's Gate 3.">
+  <section class="cabeca" data-entra>
+    <h1>Doze classes</h1>
+    <p class="apoio">Escolha a sua e veja as builds, parties, combos e talentos que servem pra ela.</p>
+  </section>
+  <TabelaClasses contagem={contarPorClasse(posts)} />
+</Base>

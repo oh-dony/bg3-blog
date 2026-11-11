@@ -7,7 +7,7 @@
 import { acharImagem } from '../lib/imagens';
 import { nomeDoSlug, iniciais } from '../tipos';
 
-interface Props { npc?: string; nome?: string; tamanho?: number }
+interface Props { npc?: string; nome?: string; tamanho?: number; en?: string } // en: só para o npm run icones
 const { npc, tamanho = 72 } = Astro.props;
 const nome = Astro.props.nome ?? (npc ? nomeDoSlug(npc) : '?');
 const src = npc ? acharImagem('retratos', npc) : undefined;

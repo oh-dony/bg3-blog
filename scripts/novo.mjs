@@ -33,7 +33,8 @@ titulo: "${titulo.replace(/"/g, '\\"')}"
 tipo: ${tipo}
 data: ${hoje}
 resumo: ""
-${extrasBuild}tags: []
+${extrasBuild}classes: []   # ex.: [paladino, guerreiro]. Builds e parties já pegam do campo classe/membros
+tags: []
 rascunho: true   # mude para false quando quiser que apareça no site
 ---
 

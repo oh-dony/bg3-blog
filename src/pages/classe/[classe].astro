@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import Frase from '../../components/Frase.astro';
+import ListaPosts from '../../components/ListaPosts.astro';
+import { postsPublicados } from '../../lib/posts';
+import { gravura, legenda, emblema } from '../../lib/gravuras';
+import { CLASSES, SLUGS_CLASSES, classesDoPost, type Classe } from '../../classes';
+import { TIPOS, url, type Tipo } from '../../tipos';
+
+export function getStaticPaths() {
+  return Object.keys(CLASSES).map((classe) => ({ params: { classe } }));
+}
+const slug = Astro.params.classe as Classe;
+const c = CLASSES[slug];
+const todos = await postsPublicados();
+const posts = todos.filter((p) => classesDoPost(p).includes(slug));
+const secoes = (Object.keys(TIPOS) as Tipo[])
+  .map((tipo) => ({ tipo, t: TIPOS[tipo], posts: posts.filter((p) => p.data.tipo === tipo) }))
+  .filter((s) => s.posts.length > 0);
+
+// Classes que aparecem nos mesmos posts: bons pares pra party ou multiclasse.
+const juntas = new Map<Classe, number>();
+posts.forEach((p) => classesDoPost(p).forEach((o) => o !== slug && juntas.set(o, (juntas.get(o) ?? 0) + 1)));
+let vizinhas = [...juntas.entries()].sort((a, b) => b[1] - a[1]).map(([o]) => o).slice(0, 4);
+if (vizinhas.length < 4) vizinhas = [...vizinhas, ...SLUGS_CLASSES.filter((o) => o !== slug && !vizinhas.includes(o))].slice(0, 4);
+const nomeArtigo = c.nome;
+---
+<Base titulo={c.nome} descricao={`Builds, parties, combos e talentos para ${c.nome} em Baldur's Gate 3.`}>
+  <section class="cabeca">
+    <Frase inicio="Jogando de" fim={c.nome} classes={[slug]}>
+    <div class="frase-resto">
+    <p class="apoio">{c.papel}. Atributo principal: {c.atributo}.</p>
+    <div class="frase-acoes">
+      <button class="marcar" type="button" data-marcar-classe={slug} aria-pressed="false">Estou jogando de {c.nome}</button>
+      <a class="link-simples" href={url('classe/')}>Todas as classes</a>
+      {secoes.length > 1 && (
+        <nav class="indice" aria-label="Nesta página">
+          {secoes.map((s) => <a href={`#${s.tipo}`}>{s.t.nome} ({s.posts.length})</a>)}
+        </nav>
+      )}
+    </div>
+    </div>
+    </Frase>
+  </section>
+
+  <figure class="faixa">
+    <div class="quadro"><img src={gravura(slug)} alt={legenda(slug)} width="900" height="1150" loading="lazy" decoding="async" /></div>
+    <figcaption>{legenda(slug)}</figcaption>
+  </figure>
+
+  {secoes.length === 0 && (
+    <p class="vazio">Nada pra {nomeArtigo} ainda. Num post novo, coloque <code>classes: [{slug}]</code> no topo.</p>
+  )}
+  {secoes.map((s) => (
+    <section id={s.tipo} class="grade12 bloco">
+      <div class="bloco-titulo">
+        <h2>{s.t.nome}</h2>
+        <p>{s.posts.length === 1 ? '1 anotação' : `${s.posts.length} anotações`}</p>
+      </div>
+      <ListaPosts posts={s.posts} semTipo />
+    </section>
+  ))}
+
+  <section class="secao">
+    <h2 class="titulo-secao">Anda junto com {nomeArtigo}</h2>
+    <ul class="vizinhas" data-entra>
+      {vizinhas.map((o) => (
+        <li><a href={url(`classe/${o}/`)}>
+          <div class="quadro"><img src={gravura(o)} alt="" width="900" height="1150" loading="lazy" decoding="async" /></div>
+          <strong><img class="emblema-mini" src={emblema(o)} alt="" width="48" height="48" loading="lazy" />{CLASSES[o].nome}</strong>
+          <span>{juntas.get(o) ? `${juntas.get(o)} anotação${juntas.get(o) === 1 ? '' : 'ões'} em comum` : CLASSES[o].papel}</span>
+        </a></li>
+      ))}
+    </ul>
+  </section>
+</Base>

@@ -7,6 +7,14 @@
 Os posts ficam em `src/content/posts/`. Um post novo começa com `rascunho: true`;
 mude para `false` para ele aparecer no site.
 
+## Classes
+Cada post aparece na página das classes para as quais serve (`/classe/paladino/` etc.).
+- Builds e parties já são detectadas pelo campo `classe` e pelos `membros`.
+- Talentos, combos e dicas: coloque `classes: [paladino, guerreiro]` no topo do post.
+
+Nomes válidos: barbaro, bardo, bruxo, clerigo, druida, feiticeiro, guerreiro,
+ladino, mago, monge, paladino, patrulheiro. Ícone da classe: `public/icones/classes/<nome>.webp`.
+
 ## Ícones e retratos do jogo
 Coloque as imagens em `public/` com o nome em minúsculo e hífen, sem acento:
 
@@ -20,6 +28,19 @@ E use dentro de posts `.mdx`, sem import:
     <Retrato npc="shadowheart" nome="Shadowheart" />
 
 Sem a imagem, aparece um marcador com as iniciais, e o post funciona igual.
+
+### Baixar as imagens automaticamente
+    npm run icones                 # baixa da bg3.wiki tudo o que os posts usam e ainda falta
+    npm run icones -- --simular    # só mostra o que baixaria
+
+O script lê os `<Icone>`, `<Retrato>` e `retrato:` das parties, pula o que já existe
+em `public/` e procura na bg3.wiki pelo nome em inglês, que ele tira de:
+1. `en="..."` no próprio componente: `<Icone magia="bola-de-fogo" en="Fireball" />`
+2. `scripts/nomes-en.json` (classes e companheiros já estão lá)
+3. a primeira frase da `dica` (`dica="Call Lightning. Concentração..."`)
+
+O que ele não achar aparece no fim, com o nome do post. Ponha o `en=` e rode de novo.
+Para trocar uma imagem, apague o arquivo e rode de novo.
 Quando o nome tem acento, passe `nome="..."` (o slug não tem).
 
 ## Parties

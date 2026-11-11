@@ -1,23 +1,55 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../../layouts/Base.astro';
-import Cartao from '../../components/Cartao.astro';
+import ListaPosts from '../../components/ListaPosts.astro';
+import { postsPublicados } from '../../lib/posts';
+import { CLASSES, SLUGS_CLASSES, classesDoPost } from '../../classes';
 import { TIPOS, type Tipo } from '../../tipos';
 
 export function getStaticPaths() {
   return Object.keys(TIPOS).map((tipo) => ({ params: { tipo } }));
 }
+const DESCRICAO: Record<Tipo, string> = {
+  build: 'Personagens montados do nível 1 ao 12: classes, atributos e a ordem dos níveis.',
+  party: 'Quatro personagens que jogam um a favor do outro, com o turno do combo descrito.',
+  combo: 'Duas ou três peças que, juntas, fazem mais do que separadas.',
+  talento: 'Talentos e pares de talentos, com o que fazem e pra quem valem.',
+  dica: 'Coisas pequenas que fazem diferença na campanha.',
+};
 const tipo = Astro.params.tipo as Tipo;
 const t = TIPOS[tipo];
-const posts = (await getCollection('posts', ({ data }) => !data.rascunho && data.tipo === tipo))
-  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
+const posts = (await postsPublicados()).filter((p) => p.data.tipo === tipo);
+const presentes = SLUGS_CLASSES.filter((c) => posts.some((p) => classesDoPost(p).includes(c)));
 ---
-<Base titulo={t.nome}>
-  <section class="abertura menor">
-    <p class="sobretitulo">{t.icone} Categoria</p>
+<Base titulo={t.nome} descricao={DESCRICAO[tipo]}>
+  <section class="cabeca" data-entra>
     <h1>{t.nome}</h1>
+    <p class="apoio">{DESCRICAO[tipo]}</p>
+    {presentes.length > 1 && (
+      <div class="filtro" role="group" aria-label="Filtrar por classe">
+        <button type="button" data-filtro="" aria-pressed="true">Todas</button>
+        {presentes.map((c) => <button type="button" data-filtro={c} aria-pressed="false">{CLASSES[c].nome}</button>)}
+      </div>
+    )}
   </section>
+
   {posts.length === 0
-    ? <p class="vazio">Nenhum(a) {t.singular.toLowerCase()} ainda. Rode <code>npm run novo -- {tipo} "Nome"</code>.</p>
-    : <div class="grade">{posts.map((post) => <Cartao post={post} />)}</div>}
+    ? <p class="vazio">Nada aqui ainda. Rode <code>npm run novo -- {tipo} "Nome"</code>.</p>
+    : <ListaPosts posts={posts} filtravel semTipo />}
+
+  <script is:inline>
+    (() => {
+      const botoes = document.querySelectorAll('[data-filtro]');
+      const itens = document.querySelectorAll('[data-filtrar] > li');
+      function filtrar(classe) {
+        botoes.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtro === classe)));
+        itens.forEach((li) => { li.hidden = !!classe && !li.dataset.classes.split(' ').includes(classe); });
+      }
+      botoes.forEach((b) => b.addEventListener('click', () => filtrar(b.dataset.filtro)));
+      document.addEventListener('grimorio:classe', (e) => {
+        const minha = [...botoes].find((b) => b.dataset.filtro && b.dataset.filtro === e.detail);
+        botoes.forEach((b) => b.classList.remove('minha'));
+        if (minha) { minha.classList.add('minha'); botoes[0].after(minha); }
+      });
+    })();
+  </script>
 </Base>

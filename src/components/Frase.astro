@@ -1,0 +1,24 @@
+---
+/**
+ * A frase da página com o emblema grande da classe ao lado.
+ *   <Frase inicio="Jogando de" fim="quê?" classes={[...]} ciclo />
+ * Com `ciclo`, o emblema passa pelas classes; o script do Base troca pela classe salva.
+ */
+import type { Classe } from '../classes';
+import { emblema } from '../lib/gravuras';
+interface Props { inicio: string; fim: string; classes: Classe[]; ciclo?: boolean }
+const { inicio, fim, classes, ciclo = false } = Astro.props;
+---
+<div class="frase-bloco" data-frase>
+  <h1 class="frase">
+    <span class="linha">{inicio}</span>
+    <span class="linha" data-palavra data-padrao={fim}>{fim}</span>
+  </h1>
+  <span class="janela emblema abre" data-janela data-ciclo={ciclo ? '' : undefined} aria-hidden="true">{
+    classes.map((c, i) => (
+      <img src={emblema(c)} alt="" data-classe={c} class={i === 0 ? 'ativa' : undefined}
+        width="300" height="300" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+    ))
+  }</span>
+  <slot />
+</div>

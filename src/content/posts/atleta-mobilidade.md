@@ -4,6 +4,7 @@ tipo: talento
 data: 2026-11-11
 resumo: "Pula mais longe, levanta mais rápido e bate e sai sem levar ataque de oportunidade."
 talentos: ["Atleta (Athlete)", "Mobilidade (Mobile)"]
+classes: [monge, ladino, guerreiro]
 tags: ["mobilidade", "corpo a corpo", "monge", "vídeo"]
 ---
 

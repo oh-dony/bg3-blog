@@ -1,44 +1,155 @@
 ---
 import '../styles/global.css';
 import { TIPOS, url } from '../tipos';
+import { CLASSES } from '../classes';
+import { gravura } from '../lib/gravuras';
 interface Props { titulo?: string; descricao?: string }
-const { titulo, descricao = "Builds, combos e talentos de Baldur's Gate 3" } = Astro.props;
+const { titulo, descricao = "Builds, parties, combos e talentos de Baldur's Gate 3, separados por classe." } = Astro.props;
 const nomeSite = 'Grimório';
 const atual = Astro.url.pathname;
+const aqui = (href: string) => (atual.startsWith(href) ? 'page' : undefined);
+const classesJs = Object.fromEntries(Object.entries(CLASSES).map(([k, c]) => [k, { nome: c.nome, gravura: gravura(k) }]));
+const base = url('');
 ---
 <!doctype html>
 <html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{titulo ? `${titulo} · ${nomeSite}` : nomeSite}</title>
+    <title>{titulo ? `${titulo} · ${nomeSite}` : `${nomeSite} · Baldur's Gate 3`}</title>
     <meta name="description" content={descricao} />
     <link rel="icon" href={url('favicon.svg')} type="image/svg+xml" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Crimson+Pro:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Grenze+Gotisch:wght@500;600;700&family=Alegreya:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet" />
+    <script is:inline>document.documentElement.classList.add('js');</script>
   </head>
   <body>
     <header class="topo">
-      <a class="marca" href={url()}>
-        <span class="selo">G</span>
-        <span>{nomeSite}</span>
-      </a>
-      <nav>
-        {Object.entries(TIPOS).map(([chave, t]) => {
-          const href = url(`tipo/${chave}/`);
-          return <a href={href} class={atual.startsWith(href) ? 'ativo' : ''}>{t.nome}</a>;
-        })}
+      <a class="marca" href={url()}>{nomeSite}</a>
+      <nav aria-label="Principal">
+        <a href={url('classe/')} aria-current={aqui(url('classe/'))}>Classes</a>
+        {Object.entries(TIPOS).map(([chave, t]) => (
+          <a href={url(`tipo/${chave}/`)} aria-current={aqui(url(`tipo/${chave}/`))}>{t.nome}</a>
+        ))}
       </nav>
+      <a class="botao escuro" href={url('classe/')} data-minha-acao>Escolher classe</a>
     </header>
-    <main><slot /></main>
-    <footer class="rodape">
-      <p>Anotações pessoais de Baldur's Gate 3.</p>
-      <p class="aviso">
-        Site de fã não oficial e gratuito. Baldur's Gate 3, seus ícones e retratos © Larian Studios.
-        Dungeons &amp; Dragons e Forgotten Realms são marcas da Wizards of the Coast.
-        Este site não é endossado pela Larian Studios nem pela Wizards of the Coast.
-      </p>
+
+    <main class="pagina"><slot /></main>
+
+    <footer class="fecho">
+      <div class="grade12 fecho-topo">
+        <div class="fecho-convite">
+          <h2>Escolheu a classe?<br />Monte a party.</h2>
+          <a class="botao" href={url('tipo/party/')}>Ver as parties <span class="seta" aria-hidden="true">→</span></a>
+        </div>
+        <ul class="fecho-links">
+          <li><a href={url('classe/')}>Classes</a></li>
+          {Object.entries(TIPOS).map(([chave, t]) => <li><a href={url(`tipo/${chave}/`)}>{t.nome}</a></li>)}
+        </ul>
+      </div>
+      <div class="fecho-legal">
+        <p>Site de fã, não oficial. Baldur's Gate 3 © Larian Studios; D&amp;D é marca da Wizards of the Coast.</p>
+        <p>Gravuras em domínio público. <a href={url('creditos/')}>Créditos</a></p>
+      </div>
+      <p class="fecho-nome" aria-hidden="true">{nomeSite}</p>
     </footer>
+
+    <script is:inline define:vars={{ classesJs, base }}>
+      const CHAVE = 'grimorio:classe';
+      const ler = () => { try { const v = localStorage.getItem(CHAVE); return classesJs[v] ? v : null; } catch { return null; } };
+      const gravar = (v) => { try { v ? localStorage.setItem(CHAVE, v) : localStorage.removeItem(CHAVE); } catch {} };
+      const linkClasse = (c) => `${base}/classe/${c}/`.replace(/\/+/g, '/');
+      const reduz = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      // ---- A classe escolhida ("Estou jogando de ...") ----
+      let ciclo;
+      function aplicar() {
+        const minha = ler();
+        const acao = document.querySelector('[data-minha-acao]');
+        acao.textContent = minha ? `Jogando de ${classesJs[minha].nome}` : 'Escolher classe';
+        acao.href = minha ? linkClasse(minha) : linkClasse('').replace(/\/$/, '/');
+
+        // A frase da home: a janela mostra a classe salva e a palavra vira o nome dela.
+        document.querySelectorAll('[data-janela][data-ciclo]').forEach((janela) => {
+          const imgs = [...janela.querySelectorAll('img')];
+          const palavra = janela.closest('[data-frase]').querySelector('[data-palavra]');
+          clearInterval(ciclo);
+          if (minha) {
+            imgs.forEach((im) => im.classList.toggle('ativa', im.dataset.classe === minha));
+            palavra.textContent = classesJs[minha].nome;
+          } else {
+            palavra.textContent = palavra.dataset.padrao;
+            if (!reduz) {
+              let i = Math.max(0, imgs.findIndex((im) => im.classList.contains('ativa')));
+              ciclo = setInterval(() => {
+                imgs[i].classList.remove('ativa');
+                i = (i + 1) % imgs.length;
+                imgs[i].loading = 'eager';
+                imgs[i].classList.add('ativa');
+              }, 1600);
+            }
+          }
+        });
+        document.querySelectorAll('[data-continuar]').forEach((el) => {
+          el.hidden = !minha;
+          if (minha) { el.href = linkClasse(minha); el.querySelector('[data-nome]').textContent = classesJs[minha].nome; }
+        });
+        document.querySelectorAll('[data-classe-linha]').forEach((el) => el.classList.toggle('minha', el.dataset.classeLinha === minha));
+        document.querySelectorAll('[data-marcar-classe]').forEach((btn) => {
+          const sim = btn.dataset.marcarClasse === minha;
+          btn.setAttribute('aria-pressed', String(sim));
+          btn.textContent = sim ? `Jogando de ${classesJs[minha].nome}` : `Estou jogando de ${classesJs[btn.dataset.marcarClasse].nome}`;
+        });
+        document.dispatchEvent(new CustomEvent('grimorio:classe', { detail: minha }));
+      }
+      document.querySelectorAll('[data-marcar-classe]').forEach((btn) =>
+        btn.addEventListener('click', () => {
+          gravar(btn.getAttribute('aria-pressed') === 'true' ? null : btn.dataset.marcarClasse);
+          aplicar();
+        }));
+
+      // ---- Tabela de classes: a gravura à esquerda segue o cursor ----
+      document.querySelectorAll('[data-tabela-classes]').forEach((t) => {
+        const img = t.querySelector('[data-previa]');
+        const leg = t.querySelector('[data-previa-legenda]');
+        const mostrar = (a) => { img.src = a.dataset.gravura; leg.textContent = a.dataset.legenda; };
+        t.querySelectorAll('[data-classe-linha]').forEach((a) => {
+          a.addEventListener('mouseenter', () => mostrar(a));
+          a.addEventListener('focus', () => mostrar(a));
+        });
+        document.addEventListener('grimorio:classe', (e) => {
+          const a = e.detail && t.querySelector(`[data-classe-linha="${e.detail}"]`);
+          if (a) mostrar(a);
+        });
+      });
+
+      aplicar();
+
+      // ---- Movimento: a janela abre como obturador; as seções entram uma parte de cada vez ----
+      requestAnimationFrame(() => setTimeout(() =>
+        document.querySelectorAll('.janela.abre').forEach((j) => j.classList.add('aberta')), 120));
+
+      const entra = document.querySelectorAll('[data-entra]');
+      entra.forEach((bloco) => [...bloco.children].forEach((filho, i) => {
+        if (!filho.style.getPropertyValue('--i')) filho.style.setProperty('--i', Math.min(i, 8));
+      }));
+      if ('IntersectionObserver' in window && !reduz) {
+        const io = new IntersectionObserver((itens) => itens.forEach((it) => {
+          if (it.isIntersecting) { it.target.classList.add('visto'); io.unobserve(it.target); }
+        }), { rootMargin: '0px 0px -8% 0px' });
+        entra.forEach((el) => io.observe(el));
+      } else entra.forEach((el) => el.classList.add('visto'));
+
+      // ---- Vitrine da party: três distâncias da mesma gravura ----
+      document.querySelectorAll('[data-vitrine]').forEach((v) => {
+        if (reduz || !('IntersectionObserver' in window)) { v.dataset.etapa = '3'; return; }
+        const io = new IntersectionObserver((itens) => itens.forEach((it) => {
+          if (it.isIntersecting) v.dataset.etapa = it.target.dataset.marco;
+        }), { rootMargin: '-50% 0px -50% 0px' });
+        v.querySelectorAll('[data-marco]').forEach((m) => io.observe(m));
+      });
+    </script>
   </body>
 </html>

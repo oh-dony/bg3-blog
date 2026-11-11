@@ -3,6 +3,7 @@ titulo: "Escuridão + Visão do Diabo"
 tipo: combo
 data: 2026-11-09
 resumo: "Você enxerga dentro da sua própria Escuridão; os inimigos não."
+classes: [bruxo]
 tags: ["bruxo", "controle", "exemplo"]
 ---
 

@@ -4,6 +4,7 @@ tipo: talento
 data: 2026-11-11
 resumo: "−5 no acerto, +10 no dano à distância. A Sorte rerrola os erros."
 talentos: ["Franco Atirador (Sharpshooter)", "Sorte (Lucky)"]
+classes: [patrulheiro, guerreiro, ladino]
 tags: ["distância", "arco", "dano", "vídeo"]
 ---
 

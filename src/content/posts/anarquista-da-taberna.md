@@ -4,6 +4,7 @@ tipo: talento
 data: 2026-11-11
 resumo: "Força somada duas vezes: no acerto e no dano de socos, arremessos e armas improvisadas."
 talentos: ["Anarquista da Taberna (Tavern Brawler)"]
+classes: [monge, barbaro, guerreiro]
 tags: ["arremesso", "monge", "força", "vídeo"]
 ---
 

@@ -1,0 +1,29 @@
+{
+  "_leia": "Nome em inglês (como está na bg3.wiki) para slugs que o script não consegue adivinhar. Chave: <pasta>/<slug>.",
+
+  "classes/barbaro": "Barbarian",
+  "classes/bardo": "Bard",
+  "classes/bruxo": "Warlock",
+  "classes/clerigo": "Cleric",
+  "classes/druida": "Druid",
+  "classes/feiticeiro": "Sorcerer",
+  "classes/guerreiro": "Fighter",
+  "classes/ladino": "Rogue",
+  "classes/mago": "Wizard",
+  "classes/monge": "Monk",
+  "classes/paladino": "Paladin",
+  "classes/patrulheiro": "Ranger",
+
+  "retratos/astarion": "Astarion",
+  "retratos/gale": "Gale",
+  "retratos/halsin": "Halsin",
+  "retratos/jaheira": "Jaheira",
+  "retratos/karlach": "Karlach",
+  "retratos/laezel": "Lae'zel",
+  "retratos/minsc": "Minsc",
+  "retratos/minthara": "Minthara",
+  "retratos/shadowheart": "Shadowheart",
+  "retratos/wyll": "Wyll",
+
+  "talentos/anarquista-da-taberna": "Tavern Brawler"
+}

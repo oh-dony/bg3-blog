@@ -3,6 +3,7 @@ titulo: "Mestre em Armas Grandes"
 tipo: talento
 data: 2026-11-08
 resumo: "−5 no acerto, +10 no dano com armas pesadas. E um ataque bônus quando mata ou dá crítico."
+classes: [barbaro, guerreiro, paladino]
 tags: ["corpo a corpo", "dano", "exemplo"]
 ---
 

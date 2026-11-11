@@ -1,33 +1,80 @@
 ---
-import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
-import Cartao from '../components/Cartao.astro';
+import Frase from '../components/Frase.astro';
+import TabelaClasses from '../components/TabelaClasses.astro';
+import { postsPublicados, contarPorClasse } from '../lib/posts';
+import { gravura, legenda } from '../lib/gravuras';
+import { SLUGS_CLASSES, classesDoPost } from '../classes';
 import { TIPOS, url } from '../tipos';
 
-const posts = (await getCollection('posts', ({ data }) => !data.rascunho))
-  .sort((a, b) => b.data.data.valueOf() - a.data.data.valueOf());
-const contagem = (tipo: string) => posts.filter((p) => p.data.tipo === tipo).length;
+const posts = await postsPublicados();
+const party = posts.find((p) => p.data.tipo === 'party');
+const contagemTipo = (tipo: string) => posts.filter((p) => p.data.tipo === tipo).length;
+// A frase começa no Paladino e depois passa pelas outras.
+const ordemFrase = ['paladino', ...SLUGS_CLASSES.filter((c) => c !== 'paladino')] as typeof SLUGS_CLASSES;
 ---
 <Base>
-  <section class="abertura">
-    <p class="sobretitulo">Baldur's Gate 3</p>
-    <h1>Grimório</h1>
-    <p class="lede">Builds, combos e talentos que funcionaram (e alguns que não) guardados num lugar só.</p>
-    <div class="atalhos">
-      {Object.entries(TIPOS).map(([chave, t]) => (
-        <a class={`atalho tipo-${chave}`} href={url(`tipo/${chave}/`)}>
-          <span class="atalho-icone">{t.icone}</span>
-          <span>{t.nome}</span>
-          <span class="atalho-num">{contagem(chave)}</span>
-        </a>
-      ))}
-    </div>
+  <section class="frase-tela">
+    <Frase inicio="Jogando de" fim="quê?" classes={ordemFrase} ciclo>
+      <div class="frase-resto">
+        <p class="frase-apoio">Grimório é o caderno de builds, parties, combos e talentos de Baldur's Gate 3, separado pelas doze classes.</p>
+        <div class="frase-acoes">
+          <a class="botao" href="#classes">Escolher a classe <span class="seta" aria-hidden="true">↓</span></a>
+          <a class="link-simples" href="#" data-continuar hidden>Ver tudo de <span data-nome></span></a>
+        </div>
+      </div>
+    </Frase>
   </section>
 
-  <section>
-    <h2 class="secao">Mais recentes</h2>
-    {posts.length === 0
-      ? <p class="vazio">Nada por aqui ainda. Rode <code>npm run novo</code> para criar o primeiro.</p>
-      : <div class="grade">{posts.map((post) => <Cartao post={post} />)}</div>}
+  <section id="classes" class="secao">
+    <h2 class="titulo-secao recuo">Doze classes, um caderno só</h2>
+    <TabelaClasses contagem={contarPorClasse(posts)} />
+  </section>
+
+  {party && (
+    <section class="vitrine" data-vitrine data-etapa="1" aria-labelledby="titulo-vitrine">
+      <span class="marco" data-marco="1" style="top: 50vh"></span>
+      <span class="marco" data-marco="2" style="top: 105vh"></span>
+      <span class="marco" data-marco="3" style="top: 160vh"></span>
+      <div class="palco">
+        <div class="palco-dentro">
+          <h2 id="titulo-vitrine">
+            <span class="metade-1">Quatro na party,</span>
+            <span class="moldura"><img src={gravura("party")} alt="" width="900" height="1240" loading="lazy" decoding="async" /></span>
+            <span class="metade-2">um plano só.</span>
+          </h2>
+          <div class="vitrine-legenda">
+            <h3>{party.data.titulo}</h3>
+            <p class="membros">{party.data.membros?.map((m) => m.nome).join(', ')}</p>
+            <p>{party.data.resumo}</p>
+            <p><a class="link-simples" href={url(`posts/${party.id}/`)}>Ler a party</a> · <a class="link-simples" href={url('tipo/party/')}>todas as parties</a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="secao">
+    <div class="tudo" data-entra>
+      <div>
+        <h2>Tudo anotado:</h2>
+        <ul>
+          {posts.map((p, i) => {
+            const c = classesDoPost(p)[0];
+            return (
+              <li><a href={url(`posts/${p.id}/`)}>{p.data.titulo}{i < 3 && c && (
+                <span class="miniatura" aria-hidden="true"><img src={gravura(c)} alt="" width="60" height="40" loading="lazy" /></span>
+              )}</a></li>
+            );
+          })}
+        </ul>
+      </div>
+      <p class="tudo-rodape">{posts.length} anotações, a mais recente primeiro.</p>
+    </div>
+    <nav class="tipos" aria-label="Por tipo">
+      {Object.entries(TIPOS).map(([chave, t]) => (
+        <a href={url(`tipo/${chave}/`)}>{t.nome} <span>{contagemTipo(chave)}</span></a>
+      ))}
+    </nav>
   </section>
 </Base>
