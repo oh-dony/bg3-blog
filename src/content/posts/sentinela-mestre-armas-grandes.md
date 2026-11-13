@@ -16,5 +16,3 @@ tags: ["corpo a corpo", "tanque", "reação", "vídeo"]
 ## Anotações
 
 - O resumo do vídeo chamou de "Maestria de Armas". O bônus de dano com armas grandes, porém, vem do **Mestre em Armas Grandes**.
-
-> Fonte: vídeo de combinações de talentos (2:15).

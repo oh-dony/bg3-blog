@@ -16,5 +16,3 @@ tags: ["mobilidade", "corpo a corpo", "monge", "vídeo"]
 ## Anotações
 
 - O resumo do vídeo chamou o segundo de "Leveza". O nome certo é **Mobilidade**. É dele que vem o "bater e sair".
-
-> Fonte: vídeo de combinações de talentos (6:02).

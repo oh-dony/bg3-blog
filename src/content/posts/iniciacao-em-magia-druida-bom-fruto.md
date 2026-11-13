@@ -13,5 +13,3 @@ tags: ["cura", "suporte", "clérigo", "vídeo"]
 - **Iniciação em Magia (Druida)** dá a magia **Bom Fruto** (Goodberry).
 - O **Discípulo da Vida**, do Clérigo da Vida, soma cura extra em cada fruto.
 - Resultado: um espaço de magia de 1º círculo vira vários frutos que curam bem. Dá pra distribuir para o grupo e comer como ação bônus.
-
-> Fonte: vídeo de combinações de talentos (5:12).

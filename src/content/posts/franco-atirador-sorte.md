@@ -16,5 +16,3 @@ tags: ["distância", "arco", "dano", "vídeo"]
 ## Anotações
 
 - Ligue o −5 quando já tiver vantagem: alvo cego, derrubado ou você em terreno alto.
-
-> Fonte: vídeo de combinações de talentos (1:01).

@@ -20,5 +20,3 @@ Soma o modificador de **Força** de novo nas jogadas de **ataque e dano** com at
 ## Anotações
 
 - Fica ainda mais forte com algo que suba a Força, como o Elixir da Força do Gigante da Colina.
-
-> Fonte: vídeo de combinações de talentos (0:14).

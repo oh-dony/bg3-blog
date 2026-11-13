@@ -18,5 +18,3 @@ tags: ["conjurador", "concentração", "iniciativa", "vídeo"]
 
 - Resiliente e Conjurador de Guerra juntos quase garantem que magias como Hipnose, Pressa e Espírito Guardião não caem.
 - Não dá pra pegar os três cedo. O Alerta costuma ser o primeiro.
-
-> Fonte: vídeo de combinações de talentos (3:26).

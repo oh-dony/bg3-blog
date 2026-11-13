@@ -15,5 +15,3 @@ Você escolhe um tipo de dano: Ácido, Frio, Fogo, Elétrico ou Trovão. As suas
 ## Quando vale
 
 - Feiticeiro ou mago focado num elemento só, principalmente **Fogo**, que muito inimigo resiste.
-
-> Fonte: vídeo de combinações de talentos (4:47).
