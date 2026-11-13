@@ -1,0 +1,469 @@
+{
+ "fonte": {
+  "site": "https://bg3.wiki",
+  "licenca": "CC BY-SA 4.0",
+  "baixado": "2026-11-13"
+ },
+ "itens": [
+  {
+   "nome": "Ability Improvement",
+   "descricao": "Increase one ability score by 2, or two ability scores by 1, up to a maximum of 20.",
+   "wiki": "https://bg3.wiki/wiki/Ability_Improvement"
+  },
+  {
+   "nome": "Actor",
+   "efeitos": [
+    {
+     "nome": "Actor",
+     "descricao": "Your Charisma ability score increases by 1, to a maximum of 20.\nYou gain expertise in Deception and Performance."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Actor"
+  },
+  {
+   "nome": "Alert",
+   "efeitos": [
+    {
+     "nome": "Alert",
+     "descricao": "You gain a +5 bonus to initiative and can't be Surprised."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Alert"
+  },
+  {
+   "nome": "Athlete",
+   "descricao": "Your Strength or Dexterity ability score increases by 1, to a maximum of 20.",
+   "efeitos": [
+    {
+     "nome": "Athlete: Standing Up",
+     "descricao": "When you are Prone, standing up uses significantly less movement.\nYour Jump distance also increases by 50%."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Athlete"
+  },
+  {
+   "nome": "Charger",
+   "efeitos": [
+    {
+     "nome": "Charger: Weapon Attack",
+     "descricao": "Charge forward and slam your weapon into the first enemy in your way without provoking Opportunity Attacks."
+    },
+    {
+     "nome": "Charger: Shove",
+     "descricao": "Charge forward and Shove the first enemy in your way without provoking Opportunity Attacks.\nShove distance depends on your Strength and the target's weight."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Charger"
+  },
+  {
+   "nome": "Crossbow Expert",
+   "efeitos": [
+    {
+     "nome": "Crossbow Expert: Point-Blank",
+     "descricao": "When you make crossbow attacks within melee range, the attack rolls do not have Disadvantage."
+    },
+    {
+     "nome": "Crossbow Expert: Wounding",
+     "descricao": "Your Piercing Shot also inflicts Gaping Wounds for twice as long."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Crossbow_Expert"
+  },
+  {
+   "nome": "Defensive Duellist",
+   "efeitos": [
+    {
+     "nome": "Defensive Duellist",
+     "descricao": "When you are attacked with a melee attack while wielding a Finesse weapon you are proficient in, you can use a Reaction to increase your Armour Class by your proficiency bonus, possibly causing the attack to miss."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Defensive_Duellist"
+  },
+  {
+   "nome": "Dual Wielder",
+   "efeitos": [
+    {
+     "nome": "Dual Wielder",
+     "descricao": "You can use Two-Weapon Fighting even if your weapons aren't Light.\nYou cannot dual-wield Two-Handed weapons."
+    },
+    {
+     "nome": "Dual Wielder: Bonus Armour Class",
+     "descricao": "You have a +1 bonus to Armour Class while wielding a melee weapon in each hand."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Dual_Wielder"
+  },
+  {
+   "nome": "Dungeon Delver",
+   "efeitos": [
+    {
+     "nome": "Dungeon Delver: Perception",
+     "descricao": "You gain Advantage on Perception checks made to detect hidden objects and on saving throws made to avoid or resist traps."
+    },
+    {
+     "nome": "Dungeon Delver: Resist Traps",
+     "descricao": "You gain resistance to the damage dealt by traps."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Dungeon_Delver"
+  },
+  {
+   "nome": "Durable",
+   "efeitos": [
+    {
+     "nome": "Durable",
+     "descricao": "Your Constitution ability score increases by 1, to a maximum of 20.\nRegain full hit points every time you take a short rest."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Durable"
+  },
+  {
+   "nome": "Elemental Adept",
+   "descricao": "Elemental Adept\nYour spells and attacks ignore resistance to a damage type of your choice. In addition, when you deal that type of damage with a spell, you cannot roll a 1.\nThe available passive features are:\nElemental Adept: Acid\nElemental Adept: Cold\nElemental Adept: Lightning\nElemental Adept: Fire\nElemental Adept: Thunder",
+   "wiki": "https://bg3.wiki/wiki/Elemental_Adept"
+  },
+  {
+   "nome": "Great Weapon Master",
+   "efeitos": [
+    {
+     "nome": "Great Weapon Master: Bonus Attack",
+     "descricao": "When an attack with a melee weapon lands a critical hit or kills a creature, you can make another melee weapon attack as a Bonus that turn."
+    },
+    {
+     "nome": "Great Weapon Master: All In",
+     "descricao": "When attacking with a Two-Handed or Versatile melee weapon (in both hands) that you are proficient with, attack rolls take a -5 penalty, but their damage increases by 10."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Great_Weapon_Master"
+  },
+  {
+   "nome": "Heavily Armoured",
+   "efeitos": [
+    {
+     "nome": "Heavily Armoured",
+     "descricao": "Your Strength ability score increases by 1, to a maximum of 20.\nGain proficiency with HeavyArmour."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Heavily_Armoured"
+  },
+  {
+   "nome": "Heavy Armour Master",
+   "efeitos": [
+    {
+     "nome": "Heavy Armour Master",
+     "descricao": "Your Strength ability score increases by 1, to a maximum of 20.\nIncoming damage from non-magical attacks also decreases by 3 while you're wearing heavy armour."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Heavy_Armour_Master"
+  },
+  {
+   "nome": "Lightly Armoured",
+   "descricao": "Your Strength or Dexterity ability score increases by 1, to a maximum of 20.",
+   "efeitos": [
+    {
+     "nome": "Lightly Armoured",
+     "descricao": "Gain proficiency with LightArmour."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Lightly_Armoured"
+  },
+  {
+   "nome": "Lucky",
+   "descricao": "You gain 3 lps that recharge after a long rest.",
+   "efeitos": [
+    {
+     "nome": "Lucky (ability check) Lucky",
+     "descricao": "You can use a Luck Point to gain Advantage on your next ability check."
+    },
+    {
+     "nome": "Lucky (reactions) Lucky",
+     "descricao": "You can use a Luck Point to gain Advantage on your next attack roll or saving throw, or to make an enemy reroll their attack roll."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Lucky"
+  },
+  {
+   "nome": "Mage Slayer",
+   "efeitos": [
+    {
+     "nome": "Mage Slayer: Saving Throw Advantage",
+     "descricao": "When a creature casts a spell within melee range of you, you have Advantage on any saving throws against it."
+    },
+    {
+     "nome": "Mage Slayer: Attack Caster",
+     "descricao": "You can use a Reaction to immediately make an attack against the caster if it casts a spell within Dist of you."
+    },
+    {
+     "nome": "Mage Slayer: Break Concentration",
+     "descricao": "Enemies you hit have Disadvantage when making saving throws to maintain their Concentration."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Mage_Slayer"
+  },
+  {
+   "nome": "Magic Initiate: Bard",
+   "efeitos": [
+    {
+     "nome": "Magic Initiate: Bard",
+     "descricao": "Learn 2 Cantrips and a 1st-level spell from the Bard spell list. You can cast the 1st-level Spell once per long rest. Your spellcasting ability for all three spells is Charisma."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Magic_Initiate%3A_Bard"
+  },
+  {
+   "nome": "Magic Initiate: Cleric",
+   "efeitos": [
+    {
+     "nome": "Magic Initiate: Cleric",
+     "descricao": "Learn 2 Cantrips and a 1st-level spell from the Cleric spell list. You can cast the 1st-level Spell once per long rest. Your spellcasting ability for all three spells is Wisdom."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Magic_Initiate%3A_Cleric"
+  },
+  {
+   "nome": "Magic Initiate: Druid",
+   "efeitos": [
+    {
+     "nome": "Magic Initiate: Druid",
+     "descricao": "Learn 2 Cantrips and a 1st-level spell from the Druid spell list. You can cast the 1st-level Spell once per long rest. Your spellcasting ability for all three spells is Wisdom."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Magic_Initiate%3A_Druid"
+  },
+  {
+   "nome": "Magic Initiate: Sorcerer",
+   "efeitos": [
+    {
+     "nome": "Magic Initiate: Sorcerer",
+     "descricao": "Learn 2 Cantrips and a 1st-level spell from the Sorcerer spell list. You can cast the 1st-level Spell once per long rest. Your spellcasting ability for all three spells is Charisma."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Magic_Initiate%3A_Sorcerer"
+  },
+  {
+   "nome": "Magic Initiate: Warlock",
+   "efeitos": [
+    {
+     "nome": "Magic Initiate: Warlock",
+     "descricao": "Learn 2 Cantrips and a 1st-level spell from the Warlock spell list. You can cast the 1st-level Spell once per long rest. Your spellcasting ability for all three spells is Charisma."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Magic_Initiate%3A_Warlock"
+  },
+  {
+   "nome": "Magic Initiate: Wizard",
+   "efeitos": [
+    {
+     "nome": "Magic Initiate: Wizard",
+     "descricao": "Learn 2 Cantrips and a 1st-level spell from the Wizard spell list. You can cast the 1st-level Spell once per long rest. Your spellcasting ability for all three spells is Intelligence."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Magic_Initiate%3A_Wizard"
+  },
+  {
+   "nome": "Martial Adept",
+   "efeitos": [
+    {
+     "nome": "Martial Adept",
+     "descricao": "Learn two Manoeuvres from the Battle Master archetype and receive 1 (additional) Superiority Die to fuel them. You regain expended Superiority Dice after a short or long rest."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Martial_Adept"
+  },
+  {
+   "nome": "Medium Armour Master",
+   "efeitos": [
+    {
+     "nome": "Medium Armour Master",
+     "descricao": "When you wear medium armour, it doesn't impose Disadvantage on Stealth checks. The bonus to Armour Class you can gain from your Dexterity modifier also becomes +3 instead of +2."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Medium_Armour_Master"
+  },
+  {
+   "nome": "Mobile",
+   "efeitos": [
+    {
+     "nome": "Mobile",
+     "descricao": "Your movement speed increases by Dist."
+    },
+    {
+     "nome": "Mobile: Evade Difficult Terrain",
+     "descricao": "When you use the Dash action, Difficult Terrain doesn't slow you down."
+    },
+    {
+     "nome": "Mobile: Evade Opportunity Attack",
+     "descricao": "If you move after making a melee attack, you don't provoke an Opportunity Attack from that target."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Mobile"
+  },
+  {
+   "nome": "Moderately Armoured",
+   "descricao": "Your Strength or Dexterity ability score increases by 1, to a maximum of 20.",
+   "efeitos": [
+    {
+     "nome": "Moderately Armoured",
+     "descricao": "Gain proficiency with MediumArmour and Shields."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Moderately_Armoured"
+  },
+  {
+   "nome": "Performer",
+   "descricao": "Your Charisma ability score increases by 1, to a maximum of 20.\nGain Instruments proficiency.",
+   "wiki": "https://bg3.wiki/wiki/Performer"
+  },
+  {
+   "nome": "Polearm Master",
+   "efeitos": [
+    {
+     "nome": "Polearm Master: Bonus Attack",
+     "descricao": "When attacking with a Glaives Glaive, Halberds Halberd, Pikes Pike, Quarterstaves Quarterstaff, or Spears Spear, you can use a Bonus to attack with the butt of your weapon."
+    },
+    {
+     "nome": "Polearm Master: Opportunity Attack",
+     "descricao": "You can also make an Opportunity Attack when a target comes within range."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Polearm_Master"
+  },
+  {
+   "nome": "Resilient",
+   "descricao": "Resilient\nYou increase an ability score by 1, to a maximum of 20.\nGain proficiency in that ability's saving throws.\nThe available passive features are:\nResilient: Strength\nResilient: Dexterity\nResilient: Constitution\nResilient: Intelligence\nResilient: Wisdom\nResilient: Charisma",
+   "wiki": "https://bg3.wiki/wiki/Resilient"
+  },
+  {
+   "nome": "Ritual Caster",
+   "efeitos": [
+    {
+     "nome": "Ritual Caster: Free Spells",
+     "descricao": "You learn two Ritual spells of your choice."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Ritual_Caster"
+  },
+  {
+   "nome": "Savage Attacker",
+   "efeitos": [
+    {
+     "nome": "Savage Attacker",
+     "descricao": "When making melee weapon attacks, you roll your damage dice twice and use the highest result."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Savage_Attacker"
+  },
+  {
+   "nome": "Sentinel",
+   "efeitos": [
+    {
+     "nome": "Sentinel: Vengeance",
+     "descricao": "When an enemy in melee range attacks an ally, you can use a Reaction to make a weapon attack against that enemy. Target ally must not have the Sentinel feat."
+    },
+    {
+     "nome": "Sentinel: Snare",
+     "descricao": "When you hit a creature with an Opportunity Attack, it can no longer move for the rest of its turn."
+    },
+    {
+     "nome": "Sentinel: Opportunity Advantage",
+     "descricao": "You gain Advantage on Opportunity Attacks."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Sentinel"
+  },
+  {
+   "nome": "Sharpshooter",
+   "efeitos": [
+    {
+     "nome": "Sharpshooter: Low Ground",
+     "descricao": "Your ranged weapon attacks are not penalized for High Ground Rules."
+    },
+    {
+     "nome": "Sharpshooter: All In",
+     "descricao": "Ranged weapon attacks with weapons you are proficient with have a -5 penalty to their attack roll, but deal an additional 10 damage."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Sharpshooter"
+  },
+  {
+   "nome": "Shield Master",
+   "efeitos": [
+    {
+     "nome": "Shield Master",
+     "descricao": "Gain a +2 bonus to Dexterity when wielding a shield."
+    },
+    {
+     "nome": "Shield Master: Block",
+     "descricao": "If a spell forces you to make a Dexterity, you can use your Reaction to shield yourself and diminish the effect's damage.\n* On a failed save, you only take half damage.\n* On a successful save, you don't take any damage, even if you normally would."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Shield_Master"
+  },
+  {
+   "nome": "Skilled",
+   "efeitos": [
+    {
+     "nome": "Skilled",
+     "descricao": "You gain proficiency in 3 skills of your choice."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Skilled"
+  },
+  {
+   "nome": "Spell Sniper",
+   "efeitos": [
+    {
+     "nome": "Spell Sniper",
+     "descricao": "You learn a cantrip, and the number you need to roll a critical hit while attacking with a spell is reduced by 1. This effect can stack."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Spell_Sniper"
+  },
+  {
+   "nome": "Tavern Brawler",
+   "descricao": "Your Strength or Constitution ability score increases by 1, to a maximum of 20.",
+   "efeitos": [
+    {
+     "nome": "Tavern Brawler",
+     "descricao": "When you make an unarmed attack, use an improvised weapon, or throw something, your strength modifier is added twice to the damage and attack roll."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Tavern_Brawler"
+  },
+  {
+   "nome": "Tough",
+   "efeitos": [
+    {
+     "nome": "Tough",
+     "descricao": "Hit point maximum increased by 2 for each level."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Tough"
+  },
+  {
+   "nome": "War Caster",
+   "efeitos": [
+    {
+     "nome": "War Caster: Concentration",
+     "descricao": "You gain Advantage on saving throws to maintain Concentration on a spell."
+    },
+    {
+     "nome": "War Caster: Opportunity Spell",
+     "descricao": "You can also use a Reaction to cast Shocking Grasp at a target moving out of melee range."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/War_Caster"
+  },
+  {
+   "nome": "Weapon Master",
+   "descricao": "Your Strength or Dexterity ability score increases by 1, to a maximum of 20.",
+   "efeitos": [
+    {
+     "nome": "Weapon Master",
+     "descricao": "Gain proficiency with four weapon types of your choice."
+    }
+   ],
+   "wiki": "https://bg3.wiki/wiki/Weapon_Master"
+  }
+ ]
+}

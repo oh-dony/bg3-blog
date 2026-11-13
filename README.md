@@ -43,6 +43,14 @@ O que ele não achar aparece no fim, com o nome do post. Ponha o `en=` e rode de
 Para trocar uma imagem, apague o arquivo e rode de novo.
 Quando o nome tem acento, passe `nome="..."` (o slug não tem).
 
+## Base de referência (bg3.wiki)
+    npm run wiki        # baixa magias e talentos para src/data/wiki/*.json (leva ~30s)
+
+Dados de consulta para escrever os posts certos: nível, dano, salvaguarda, concentração,
+quais classes e subclasses aprendem e em que nível, o que cada talento faz e o link da página.
+Os nomes ficam em inglês, como na wiki. Rode de novo depois de um patch do jogo.
+O conteúdo é da bg3.wiki (CC BY-SA 4.0): consulte, mas escreva o post com as suas palavras.
+
 ## Parties
 `npm run novo -- party "Nome"` cria um post com a lista `membros` no topo
 (nome, classe, papel e `retrato`). Eles viram os cartões da formação acima do texto.
