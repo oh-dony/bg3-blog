@@ -17,6 +17,7 @@ const atual = Astro.url.pathname;
 const contagem = contarPorClasse(await postsPublicados());
 const classesJs = Object.fromEntries(Object.entries(CLASSES).map(([k, c]) => [k, c.nome]));
 const base = url('');
+const classeAtual = (Object.keys(CLASSES) as Classe[]).find((c) => atual.startsWith(url(`classe/${c}/`)));
 const ehInicio = atual === url('') || atual === url('').replace(/\/$/, '');
 ---
 <!doctype html>
@@ -34,7 +35,15 @@ const ehInicio = atual === url('') || atual === url('').replace(/\/$/, '');
   <body>
     <div class="app">
       <aside class="lateral">
-        <a class="marca" href={url()}>Grimório <b>BG3</b></a>
+        <div class="lateral-topo">
+          <a class="marca" href={url()}>Grimório <b>BG3</b></a>
+          <button class="menu-classes" type="button" aria-expanded="false" aria-controls="lista-classes" data-menu>
+            {classeAtual && emblema(classeAtual) && <img src={emblema(classeAtual)} alt="" width="24" height="24" />}
+            <span>{classeAtual ? CLASSES[classeAtual].nome : 'Classes'}</span>
+            <svg width="12" height="12" viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+        </div>
+        <nav class="lista-classes" id="lista-classes" aria-label="Classes">
         <a class="cl" href={url()} aria-current={ehInicio ? 'page' : undefined}><span class="cl-todas">✦</span><span class="so-largo">Todas as classes</span><span class="so-estreito">Todas</span></a>
         <a class="cl minha" href="#" data-minha hidden><img src="" alt="" width="28" height="28" /><span></span><small>★</small></a>
         <h4>Classes</h4>
@@ -47,6 +56,7 @@ const ehInicio = atual === url('') || atual === url('').replace(/\/$/, '');
             </a>
           );
         })}
+        </nav>
       </aside>
 
       <div class="principal">
@@ -99,6 +109,17 @@ const ehInicio = atual === url('') || atual === url('').replace(/\/$/, '');
       document.querySelectorAll('[data-marcar-classe]').forEach((btn) =>
         btn.addEventListener('click', () => { gravar(btn.getAttribute('aria-pressed') === 'true' ? null : btn.dataset.marcarClasse); aplicar(); }));
       aplicar();
+
+      // ---- Celular: o botão "Classes" abre a grade com as 12 ----
+      const menu = document.querySelector('[data-menu]');
+      const lista = document.getElementById('lista-classes');
+      const fechar = () => { menu.setAttribute('aria-expanded', 'false'); lista.classList.remove('aberta'); };
+      menu.addEventListener('click', () => {
+        const abrir = menu.getAttribute('aria-expanded') !== 'true';
+        menu.setAttribute('aria-expanded', String(abrir));
+        lista.classList.toggle('aberta', abrir);
+      });
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') fechar(); });
 
       // ---- Busca e filtro por tipo, na própria página quando ela tem cards ----
       const grade = document.querySelector('[data-grade]');
