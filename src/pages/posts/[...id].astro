@@ -4,9 +4,9 @@ import Base from '../../layouts/Base.astro';
 import Icone from '../../components/Icone.astro';
 import Retrato from '../../components/Retrato.astro';
 import Party from '../../components/Party.astro';
+import Card from '../../components/Card.astro';
 import { postsPublicados } from '../../lib/posts';
-import ListaPosts from '../../components/ListaPosts.astro';
-import { gravura, legenda, emblema } from '../../lib/gravuras';
+import { emblema } from '../../lib/imagens';
 import { TIPOS, url, formatarData } from '../../tipos';
 import { CLASSES, classesDoPost } from '../../classes';
 
@@ -16,14 +16,11 @@ export async function getStaticPaths() {
 }
 const { post } = Astro.props;
 const d = post.data;
-const t = TIPOS[d.tipo];
 const { Content } = await render(post);
 const classes = classesDoPost(post);
-const imagem = d.tipo === 'party' ? 'party' : classes[0];
-const temFicha = true;
-// Leia também: posts que dividem mais classes com este.
-const todos = await postsPublicados();
-const relacionados = todos
+
+// Leia também: os posts que dividem mais classes com este.
+const relacionados = (await postsPublicados())
   .filter((p) => p.id !== post.id)
   .map((p) => ({ p, n: classesDoPost(p).filter((c) => classes.includes(c)).length }))
   .filter((x) => x.n > 0)
@@ -31,61 +28,58 @@ const relacionados = todos
   .slice(0, 3)
   .map((x) => x.p);
 ---
-<Base titulo={d.titulo} descricao={d.resumo}>
-  <article class="post">
-    <header class="post-cabeca" data-entra>
+<Base titulo={d.titulo} descricao={d.resumo} tipo={d.tipo}>
+  <article class={`post t-${d.tipo}`}>
+    <header class="post-cab">
+      <div class="card-cab"><a href={url(`tipo/${d.tipo}/`)}>{TIPOS[d.tipo].singular}</a><time datetime={d.data.toISOString()}>{formatarData(d.data)}</time></div>
       <h1>{d.titulo}</h1>
-      {d.resumo && <p class="apoio">{d.resumo}</p>}
+      {d.resumo && <p>{d.resumo}</p>}
+      {d.tags.length > 0 && <div class="tags">{d.tags.map((t) => <span class="tag">{t}</span>)}</div>}
     </header>
 
     {d.membros && d.membros.length > 0 && (
-      <section class="formacao">
+      <section class="bloco">
         <h2>A formação</h2>
         <Party membros={d.membros} />
       </section>
     )}
 
-    <div class="grade12 post-corpo">
+    <div class="post-corpo">
       <!-- Em posts .mdx, <Icone> e <Retrato> funcionam sem import -->
-      <div class="conteudo" data-entra><Content components={{ Icone, Retrato }} /></div>
-      {(temFicha || imagem) && (
-        <aside data-entra>
-          {temFicha && (
-            <dl class="ficha">
-              {classes.length > 0 && (
-                <div><dt>Serve para</dt><dd class="para-classes">
-                  {classes.map((c) => <a href={url(`classe/${c}/`)}><img class="emblema-mini" src={emblema(c)} alt="" width="48" height="48" loading="lazy" />{CLASSES[c].nome}</a>)}
-                </dd></div>
-              )}
-              {d.classe && <div><dt>Classe</dt><dd>{d.classe}</dd></div>}
-              {d.raca && <div><dt>Raça</dt><dd>{d.raca}</dd></div>}
-              {d.talentos && <div><dt>Talentos</dt><dd>{d.talentos.join(', ')}</dd></div>}
-              {d.atributos && (
-                <div>
-                  <dt>Atributos</dt>
-                  <dd><ul class="atributos">
-                    {Object.entries(d.atributos).map(([k, v]) => <li><span>{k}</span><strong>{v}</strong></li>)}
-                  </ul></dd>
-                </div>
-              )}
-            </dl>
-          )}
-          {imagem && d.tipo !== 'party' && (
-            <figure class="post-gravura">
-              <div class="quadro"><img src={gravura(imagem)} alt={legenda(imagem)} width="900" height="1150" loading="lazy" decoding="async" /></div>
-              <figcaption>{legenda(imagem)}</figcaption>
-            </figure>
-          )}
-        </aside>
-      )}
+      <div class="conteudo"><Content components={{ Icone, Retrato }} /></div>
+
+      <aside class="ficha">
+        {classes.length > 0 && (
+          <div>
+            <h4>Serve para</h4>
+            <div class="ficha-classes">
+              {classes.map((c) => (
+                <a href={url(`classe/${c}/`)}>
+                  {emblema(c) && <img src={emblema(c)} alt="" width="26" height="26" />}{CLASSES[c].nome}
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+        {d.classe && <div><h4>Classe</h4><p>{d.classe}</p></div>}
+        {d.raca && <div><h4>Raça</h4><p>{d.raca}</p></div>}
+        {d.talentos && <div><h4>Talentos</h4><ul>{d.talentos.map((t) => <li>{t}</li>)}</ul></div>}
+        {d.atributos && (
+          <div>
+            <h4>Atributos</h4>
+            <ul class="atributos">
+              {Object.entries(d.atributos).map(([k, v]) => <li><span>{k}</span><b>{v}</b></li>)}
+            </ul>
+          </div>
+        )}
+      </aside>
     </div>
-    <p class="post-tags"><a href={url(`tipo/${d.tipo}/`)}>{t.singular}</a>, anotado em {formatarData(d.data)}.{d.tags.length > 0 && ` Marcado como: ${d.tags.join(', ')}.`}</p>
   </article>
 
   {relacionados.length > 0 && (
-    <section class="secao">
-      <h2 class="titulo-secao">Leia também</h2>
-      <ListaPosts posts={relacionados} />
+    <section class="bloco">
+      <h2>Leia também</h2>
+      <div class="grade">{relacionados.map((p) => <Card post={p} />)}</div>
     </section>
   )}
 </Base>

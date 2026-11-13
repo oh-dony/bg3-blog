@@ -1,13 +1,22 @@
 ---
 import Base from '../../layouts/Base.astro';
-import TabelaClasses from '../../components/TabelaClasses.astro';
 import { postsPublicados, contarPorClasse } from '../../lib/posts';
-const posts = await postsPublicados();
+import { emblema } from '../../lib/imagens';
+import { CLASSES, type Classe } from '../../classes';
+import { url } from '../../tipos';
+const contagem = contarPorClasse(await postsPublicados());
 ---
-<Base titulo="Classes" descricao="Tudo do Grimório separado pelas doze classes de Baldur's Gate 3.">
-  <section class="cabeca" data-entra>
-    <h1>Doze classes</h1>
-    <p class="apoio">Escolha a sua e veja as builds, parties, combos e talentos que servem pra ela.</p>
+<Base titulo="Classes" descricao="As doze classes de Baldur's Gate 3 e o que o Grimório tem pra cada uma.">
+  <section class="banner">
+    <div><h1>Classes</h1><p>Escolha a sua pra ver tudo o que serve pra ela.</p></div>
   </section>
-  <TabelaClasses contagem={contarPorClasse(posts)} />
+  <div class="grade-classes">
+    {(Object.entries(CLASSES) as [Classe, (typeof CLASSES)[Classe]][]).map(([slug, c]) => (
+      <a class="classe-card" href={url(`classe/${slug}/`)}>
+        {emblema(slug) && <img src={emblema(slug)} alt="" width="64" height="64" loading="lazy" />}
+        <div><h3>{c.nome}</h3><p>{c.papel}</p></div>
+        <small>{contagem[slug]}</small>
+      </a>
+    ))}
+  </div>
 </Base>

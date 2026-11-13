@@ -15,3 +15,9 @@ export function acharImagem(pasta: string, slug: string): string | undefined {
   }
   return undefined;
 }
+
+/** Emblema oficial da classe (public/icones/classes/<classe>.png). */
+export const emblema = (classe: string) => acharImagem('icones/classes', classe);
+
+/** Retrato do jogo (public/retratos/<nome>.png). */
+export const retrato = (nome?: string) => (nome ? acharImagem('retratos', nome) : undefined);

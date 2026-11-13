@@ -1,21 +1,27 @@
 ---
-/** A formação: quatro colunas, cada membro com retrato (ou a gravura da classe), classe e papel. */
-import { acharImagem } from '../lib/imagens';
-import { gravura } from '../lib/gravuras';
+/** A formação: um cartão por membro, com retrato do jogo, classe e papel no combo. */
+import { retrato, emblema } from '../lib/imagens';
 import { classesNoTexto } from '../classes';
 interface Membro { nome: string; classe: string; papel: string; retrato?: string }
 interface Props { membros: Membro[] }
 const { membros } = Astro.props;
 ---
-<ol class="party" data-entra>
-  {membros.map((m, i) => {
-    const foto = (m.retrato && acharImagem('retratos', m.retrato)) || gravura(classesNoTexto(m.classe)[0] ?? 'party');
+<ol class="party">
+  {membros.map((m) => {
+    const foto = retrato(m.retrato);
+    const c = classesNoTexto(m.classe)[0];
+    const emb = c && emblema(c);
     return (
-      <li class="membro" style={`--i:${i}`}>
-        <div class:list={['quadro', { retrato: !!(m.retrato && acharImagem('retratos', m.retrato)) }]}><img src={foto} alt="" width="900" height="1150" loading="lazy" decoding="async" /></div>
-        <h3>{m.nome}</h3>
-        <p class="membro-classe">{m.classe}</p>
-        <p class="membro-papel">{m.papel}</p>
+      <li class="membro">
+        <div class="membro-foto">
+          {foto ? <img src={foto} alt="" width="120" height="120" loading="lazy" /> : <span class="ret-falta">{m.nome[0]}</span>}
+          {emb && <img class="membro-emblema" src={emb} alt="" width="36" height="36" loading="lazy" />}
+        </div>
+        <div>
+          <h3>{m.nome}</h3>
+          <p class="membro-classe">{m.classe}</p>
+          <p class="membro-papel">{m.papel}</p>
+        </div>
       </li>
     );
   })}

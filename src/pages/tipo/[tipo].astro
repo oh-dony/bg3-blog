@@ -1,8 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
-import ListaPosts from '../../components/ListaPosts.astro';
+import Card from '../../components/Card.astro';
 import { postsPublicados } from '../../lib/posts';
-import { CLASSES, SLUGS_CLASSES, classesDoPost } from '../../classes';
 import { TIPOS, type Tipo } from '../../tipos';
 
 export function getStaticPaths() {
@@ -16,40 +15,17 @@ const DESCRICAO: Record<Tipo, string> = {
   dica: 'Coisas pequenas que fazem diferença na campanha.',
 };
 const tipo = Astro.params.tipo as Tipo;
-const t = TIPOS[tipo];
 const posts = (await postsPublicados()).filter((p) => p.data.tipo === tipo);
-const presentes = SLUGS_CLASSES.filter((c) => posts.some((p) => classesDoPost(p).includes(c)));
 ---
-<Base titulo={t.nome} descricao={DESCRICAO[tipo]}>
-  <section class="cabeca" data-entra>
-    <h1>{t.nome}</h1>
-    <p class="apoio">{DESCRICAO[tipo]}</p>
-    {presentes.length > 1 && (
-      <div class="filtro" role="group" aria-label="Filtrar por classe">
-        <button type="button" data-filtro="" aria-pressed="true">Todas</button>
-        {presentes.map((c) => <button type="button" data-filtro={c} aria-pressed="false">{CLASSES[c].nome}</button>)}
-      </div>
-    )}
+<Base titulo={TIPOS[tipo].nome} descricao={DESCRICAO[tipo]} tipo={tipo}>
+  <section class={`banner t-${tipo}`}>
+    <div><h1>{TIPOS[tipo].nome}</h1><p>{DESCRICAO[tipo]}</p></div>
+    <div class="stats"><div><b>{posts.length}</b><span>anotações</span></div></div>
   </section>
-
-  {posts.length === 0
-    ? <p class="vazio">Nada aqui ainda. Rode <code>npm run novo -- {tipo} "Nome"</code>.</p>
-    : <ListaPosts posts={posts} filtravel semTipo />}
-
-  <script is:inline>
-    (() => {
-      const botoes = document.querySelectorAll('[data-filtro]');
-      const itens = document.querySelectorAll('[data-filtrar] > li');
-      function filtrar(classe) {
-        botoes.forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.filtro === classe)));
-        itens.forEach((li) => { li.hidden = !!classe && !li.dataset.classes.split(' ').includes(classe); });
-      }
-      botoes.forEach((b) => b.addEventListener('click', () => filtrar(b.dataset.filtro)));
-      document.addEventListener('grimorio:classe', (e) => {
-        const minha = [...botoes].find((b) => b.dataset.filtro && b.dataset.filtro === e.detail);
-        botoes.forEach((b) => b.classList.remove('minha'));
-        if (minha) { minha.classList.add('minha'); botoes[0].after(minha); }
-      });
-    })();
-  </script>
+  <div class="grade" data-grade data-tipo-fixo={tipo}>
+    {posts.map((post) => <Card post={post} />)}
+  </div>
+  <p class="vazio" data-vazio hidden={posts.length > 0}>
+    {posts.length === 0 ? <>Nada aqui ainda. Rode <code>npm run novo -- {tipo} "Nome"</code>.</> : 'Nada encontrado.'}
+  </p>
 </Base>

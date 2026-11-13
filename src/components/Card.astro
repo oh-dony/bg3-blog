@@ -1,0 +1,39 @@
+---
+/** Card de post: faixa colorida pelo tipo, título, resumo, tags e emblemas (ou retratos da party). */
+import type { CollectionEntry } from 'astro:content';
+import { TIPOS, url, formatarData } from '../tipos';
+import { CLASSES, classesDoPost } from '../classes';
+import { emblema, retrato } from '../lib/imagens';
+interface Props { post: CollectionEntry<'posts'> }
+const { post } = Astro.props;
+const d = post.data;
+const classes = classesDoPost(post);
+// Texto que a busca procura: título, resumo, tags, talentos e classes.
+const busca = [d.titulo, d.resumo, d.classe, ...d.tags, ...(d.talentos ?? []), ...classes.map((c) => CLASSES[c].nome),
+  ...(d.membros ?? []).map((m) => m.nome)].filter(Boolean).join(' ');
+---
+<a class={`card t-${d.tipo}`} href={url(`posts/${post.id}/`)} data-tipo={d.tipo} data-classes={classes.join(' ')} data-busca={busca}>
+  <div class="card-cab">{TIPOS[d.tipo].singular}<time datetime={d.data.toISOString()}>{formatarData(d.data)}</time></div>
+  <h3>{d.titulo}</h3>
+  {d.resumo && <p>{d.resumo}</p>}
+  {d.tags.length > 0 && <div class="tags">{d.tags.slice(0, 3).map((t) => <span class="tag">{t}</span>)}</div>}
+  <div class="card-rodape">
+    {d.membros && d.membros.length > 0 ? (
+      <>
+        <span class="retratos">{d.membros.map((m) => {
+          const src = retrato(m.retrato);
+          return src ? <img src={src} alt="" title={m.nome} width="34" height="34" loading="lazy" /> : <span class="ret-falta" title={m.nome}>{m.nome[0]}</span>;
+        })}</span>
+        <span class="legenda">{d.membros.map((m) => m.nome).join(', ')}</span>
+      </>
+    ) : (
+      <>
+        {classes.slice(0, 6).map((c) => {
+          const src = emblema(c);
+          return src && <img src={src} alt="" title={CLASSES[c].nome} width="26" height="26" loading="lazy" />;
+        })}
+        {d.classe && <span class="legenda">{d.classe}</span>}
+      </>
+    )}
+  </div>
+</a>
